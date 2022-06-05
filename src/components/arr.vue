@@ -39,7 +39,7 @@
             <input type="text" name="" id="harga" placeholder="harga" class="bg-zinc-300" v-model="harga" >
         </div>
         <button class="bg-slate-700 px-1 hover:bg-slate-600" @click="add" v-if="tambah">tambahkan</button>
-        <button class="bg-slate-700 px-1 hover:bg-slate-600" @click="addedit(index)" v-else-if="updateData">update</button>
+        <button class="bg-slate-700 px-1 hover:bg-slate-600" @click="addedit()" v-else-if="updateData">update</button>
     </div>
     <p class="text-red-700 italic" v-if="isiData">masukkan data barang terlebih dahulu!</p>
     
@@ -47,7 +47,7 @@
  
 
 
-
+    <button @click="console">console.log</button>
 
 
 
@@ -77,7 +77,8 @@ export default{
             btnValue: 'tambahkan',
             updateData: false,
             tambah:false,
-            cname: document.getElementById('nama')
+            cname: document.getElementById('nama'),
+            index: ''
         }
     },
     methods:{
@@ -85,7 +86,7 @@ export default{
             if(this.nama == '' || this.harga == ''){
                 this.isiData = true
             }else{
-                this.daftarBarang.push(
+                this.daftarBarang.unshift(
                 {
                     nama: this.nama,
                     harga: this.harga
@@ -111,25 +112,34 @@ export default{
                 this.btnValue='batalkan'
             }
         },
+        // tombol remove di click
         hapuss(i){
             // alert(i)
             this.daftarBarang.splice(i,1)
         },
-        // tampil input edit
+        // tombol edit di click 
         edit(i){
             this.btnValue='batalkan'
             this.btnt = !this.btnt
             this.tambah = false
             this.updateData = true
-            // masukka value ke input
+            // value dimasukkan ke input
             this.nama = this.daftarBarang[i].nama
             this.harga= this.daftarBarang[i].harga
-            // this.daftarBarang[i].nama = this.cname.value
+            this.index= i
         },
-        addedit(i){
-            
+        // button update di click 
+        addedit(){
+            this.btnValue='tambahkan'
             this.btnt = !this.btnt
-            this.daftarBarang[1].nama = this.nama
+            this.daftarBarang[this.index].nama = this.nama
+            this.daftarBarang[this.index].harga = this.harga
+            this.nama = ''
+            this.harga = ''
+        },
+        // debug
+        console(){
+            console.log(this.daftarBarang)
         }
     }
 }
