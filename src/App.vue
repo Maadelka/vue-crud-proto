@@ -5,9 +5,6 @@
 </template>
 
 
-
-
-
 <script>
   import comp1 from './components/comp1.vue'
   import arr from './components/arr.vue'
